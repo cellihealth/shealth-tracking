@@ -1,7 +1,13 @@
 # Samsung Health Tracking
 
-## How to add this plugin
+## Add Plugin
 
 ```
 cordova plugin add https://github.com/cellihealth/shealth-tracking --save
+```
+
+## Add Plugin
+
+```
+cordova plugin remove "com-cellihealth-plugins-sHealthTracking" --save
 ```
