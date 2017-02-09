@@ -1,13 +1,25 @@
-# Samsung Health Tracking
+# CelliHealth plugin for Cordova/Phonegap #
 
-## Add Plugin
+This plugin allows you to collect data from Samsung Health
 
-```
+
+## Adding the Plugin to your project ##
+
+In your application project directory:
+
+```bash
 cordova plugin add https://github.com/cellihealth/shealth-tracking --save
 ```
 
-## Add Plugin
+## Adding the Plugin to your project ##
 
+In your application project directory:
+
+```bash
+cordova plugin remove com.cellihealth.shealth --save
 ```
-cordova plugin remove "com-cellihealth-plugins-sHealthTracking" --save
-```
+
+
+## Licence ##
+
+The MIT License

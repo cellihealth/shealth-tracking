@@ -1,4 +1,4 @@
-package com.cellihealth.plugin;
+package com.cellihealth.shealth;
 
 import com.cellihealth.cellihealth.MainActivity;
 

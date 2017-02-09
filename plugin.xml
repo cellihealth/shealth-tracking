@@ -1,38 +1,36 @@
-<?xml version='1.0' encoding='utf-8'?>
-<plugin
-  xmlns="http://apache.org/cordova/ns/plugins/1.0"
-  xmlns:android="http://schemas.android.com/apk/res/android"
-  id="com-cellihealth-plugins-sHealthTracking"
-  version="0.0.1">
-  <name>sHealthTracking</name>
-  <description>
-    This plugin allows you to using samsung health tracking
-  </description>
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin xmlns="http://www.phonegap.com/ns/plugins/1.0"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    id="com.cellihealth.shealth"
+    version="0.0.1">
 
-  <author>CelliHealth</author>
+    <name>SHealth Tracking</name>
+    <description>
+        This plugin allows you to using samsung health tracking
+      </description>
 
-  <license>MIT</license>
+      <author>CelliHealth</author>
 
-  <keywords>SHealth, Samsung, Samsung Health</keywords>
+      <license>MIT</license>
 
-  <repo>https://github.com/cellihealth/shealth-tracking</repo>
-  
-  <js-module name="sHealthTracking" src="www/sHealthTracking.js">
-      <clobbers target="sHealthTracking" />
-  </js-module>
+      <keywords>SHealth, Samsung, Samsung Health</keywords>
 
-  <!-- android -->
-  <platform name="android">
-    <config-file target="config.xml" parent="/*">
-      <feature name="sHealthTracking">
-        <param
-          name="android-package"
-          value="com.cellihealth.plugins.sHealthTracking" />
-      </feature>
-    </config-file>
-    <source-file src="src/android/com/cellihealth/plugin/Shealth.java" 
-  target-dir="src/com/cellihealth/plugin" />
-    <source-file src="src/android/com/cellihealth/plugin/StepCountReporter.java" 
-    target-dir="src/com/cellihealth/plugin" />
-  </platform>
+      <repo>https://github.com/cellihealth/shealth-tracking</repo>
+
+
+    <js-module src="www/shealth.js" name="Shealth">
+        <clobbers target="Shealth" />
+    </js-module>
+
+    <!-- android -->
+    <platform name="android">
+        <config-file target="res/xml/config.xml" parent="/*">
+            <feature name="Shealth">
+                <param name="android-package" value="com.cellihealth.shealth.Shealth"/>
+            </feature>
+        </config-file>
+        <source-file src="src/android/com/cellihealth/shealth/Shealth.java" target-dir="src/com/cellihealth/shealth" />
+        <source-file src="src/android/com/cellihealth/shealth/StepCountReporter.java" target-dir="src/com/cellihealth/shealth" />
+    </platform>
+
 </plugin>
