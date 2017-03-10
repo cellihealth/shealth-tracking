@@ -1,7 +1,5 @@
 package com.cellihealth.shealth;
 
-import com.cellihealth.cellihealth.MainActivity;
-
 import com.samsung.android.sdk.healthdata.HealthConstants;
 import com.samsung.android.sdk.healthdata.HealthDataObserver;
 import com.samsung.android.sdk.healthdata.HealthDataResolver;
@@ -67,10 +65,10 @@ public class StepCountReporter {
         try {
             resolver.read(request).setResultListener(mListener);
 
-            Log.e(MainActivity.APP_TAG, "Getting step count success.");
+            Log.e(cordova.getActivity().APP_TAG, "Getting step count success.");
         } catch (Exception e) {
-            Log.e(MainActivity.APP_TAG, e.getClass().getName() + " - " +  e.getMessage());
-            Log.e(MainActivity.APP_TAG, "Getting step count fails.");
+            Log.e(cordova.getActivity().APP_TAG, e.getClass().getName() + " - " +  e.getMessage());
+            Log.e(cordova.getActivity().APP_TAG, "Getting step count fails.");
             sHealth.globalCallbackContext.error("Getting step count fails.");
         }
     }
@@ -100,8 +98,8 @@ public class StepCountReporter {
         try {
             resolver.read(request).setResultListener(mListener);
         } catch (Exception e) {
-            Log.e(MainActivity.APP_TAG, e.getClass().getName() + " - " + e.getMessage());
-            Log.e(MainActivity.APP_TAG, "Getting step count fails.");
+            Log.e(cordova.getActivity().APP_TAG, e.getClass().getName() + " - " + e.getMessage());
+            Log.e(cordova.getActivity().APP_TAG, "Getting step count fails.");
             sHealth.globalCallbackContext.error("Getting step count fails.");
         }
     }
@@ -129,7 +127,7 @@ public class StepCountReporter {
             try {
                 c = result.getResultCursor();
 
-                Log.d(MainActivity.APP_TAG, "Column Names" + Arrays.toString(c.getColumnNames()));
+                Log.d(cordova.getActivity().APP_TAG, "Column Names" + Arrays.toString(c.getColumnNames()));
 
                 if (c != null) {
                     String deviceName = "";
@@ -164,11 +162,11 @@ public class StepCountReporter {
                     }
 
                 } else {
-                    Log.d(MainActivity.APP_TAG, "The cursor is null.");
+                    Log.d(cordova.getActivity().APP_TAG, "The cursor is null.");
                 }
             }
             catch(Exception e) {
-                Log.e(MainActivity.APP_TAG, e.getClass().getName() + " - " + e.getMessage());
+                Log.e(cordova.getActivity().APP_TAG, e.getClass().getName() + " - " + e.getMessage());
             }
             finally {
                 if (c != null) {
@@ -177,12 +175,12 @@ public class StepCountReporter {
             }
             resultSet += "]";
 
-            Log.d(MainActivity.APP_TAG, "Steps Result: " + resultSet);
+            Log.d(cordova.getActivity().APP_TAG, "Steps Result: " + resultSet);
             try{
                 JSONArray p = new JSONArray(resultSet);
                 sHealth.drawStepCount(p);
             }catch (JSONException e){
-                LOG.d(MainActivity.APP_TAG, "JSONException on resultSet.");
+                LOG.d(cordova.getActivity().APP_TAG, "JSONException on resultSet.");
             }
         }
     };
@@ -192,7 +190,7 @@ public class StepCountReporter {
         // Update the step count when a change event is received
         @Override
         public void onChange(String dataTypeName) {
-            Log.d(MainActivity.APP_TAG, "Observer receives a data changed event");
+            Log.d(cordova.getActivity().APP_TAG, "Observer receives a data changed event");
             readStepCount();
         }
     };

@@ -16,8 +16,6 @@ import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.util.Log;
 
-import com.cellihealth.cellihealth.MainActivity;
-
 import com.samsung.android.sdk.healthdata.HealthConnectionErrorResult;
 import com.samsung.android.sdk.healthdata.HealthConstants;
 import com.samsung.android.sdk.healthdata.HealthDataService;
@@ -63,12 +61,12 @@ public class Shealth extends CordovaPlugin {
         mKeySet.add(new PermissionKey(HealthConstants.StepCount.HEALTH_DATA_TYPE, PermissionType.READ));
         HealthDataService healthDataService = new HealthDataService();
         try {
-            healthDataService.initialize(MainActivity.mInstance);
+            healthDataService.initialize(cordova.getActivity().mInstance);
         } catch (Exception e) {
             e.printStackTrace();
         }
         // Create a HealthDataStore instance and set its listener
-        mStore = new HealthDataStore(MainActivity.mInstance, mConnectionListener);
+        mStore = new HealthDataStore(cordova.getActivity().mInstance, mConnectionListener);
         // Request the connection to the health data store
         mStore.connectService();
     }
@@ -85,7 +83,7 @@ public class Shealth extends CordovaPlugin {
 
         @Override
         public void onConnected() {
-            Log.d(MainActivity.APP_TAG, "Health data service is connected.");
+            Log.d(cordova.getActivity().APP_TAG, "Health data service is connected.");
             HealthPermissionManager pmsManager = new HealthPermissionManager(mStore);
             mReporter = new StepCountReporter(mStore, Shealth.this);
 
@@ -95,28 +93,28 @@ public class Shealth extends CordovaPlugin {
                 
                 if (resultMap.containsValue(Boolean.FALSE)) {
                     // Request the permission for reading step counts if it is not acquired
-                    pmsManager.requestPermissions(mKeySet, MainActivity.mInstance).setResultListener(mPermissionListener);
+                    pmsManager.requestPermissions(mKeySet, cordova.getActivity().mInstance).setResultListener(mPermissionListener);
                 } else {
                     // Get the current step count and display it
-                    Log.d(MainActivity.APP_TAG, "COUNT THE STEPS!");
+                    Log.d(cordova.getActivity().APP_TAG, "COUNT THE STEPS!");
                     mReporter.start();
                 }
             } catch (Exception e) {
-                Log.e(MainActivity.APP_TAG, e.getClass().getName() + " - " + e.getMessage());
-                Log.e(MainActivity.APP_TAG, "Permission setting fails.");
+                Log.e(cordova.getActivity().APP_TAG, e.getClass().getName() + " - " + e.getMessage());
+                Log.e(cordova.getActivity().APP_TAG, "Permission setting fails.");
                 globalCallbackContext.error("Permission setting fails.");
             }
         }
 
         @Override
         public void onConnectionFailed(HealthConnectionErrorResult error) {
-            Log.d(MainActivity.APP_TAG, "Health data service is not available.");
+            Log.d(cordova.getActivity().APP_TAG, "Health data service is not available.");
             globalCallbackContext.error("Health data service is not available.");
         }
 
         @Override
         public void onDisconnected() {
-            Log.d(MainActivity.APP_TAG, "Health data service is disconnected.");
+            Log.d(cordova.getActivity().APP_TAG, "Health data service is disconnected.");
             globalCallbackContext.error("Health data service is disconnected.");
         }
     };
@@ -126,14 +124,14 @@ public class Shealth extends CordovaPlugin {
 
         @Override
         public void onResult(PermissionResult result) {
-            Log.d(MainActivity.APP_TAG, "Permission callback is received.");
+            Log.d(cordova.getActivity().APP_TAG, "Permission callback is received.");
             Map<PermissionKey, Boolean> resultMap = result.getResultMap();
 
             if (resultMap.containsValue(Boolean.FALSE)) {
-                Log.e(MainActivity.APP_TAG, "NOT CONNECTED YET");
+                Log.e(cordova.getActivity().APP_TAG, "NOT CONNECTED YET");
                 showPermissionAlarmDialog();
             } else {
-                Log.d(MainActivity.APP_TAG, "COUNT THE STEPS!");
+                Log.d(cordova.getActivity().APP_TAG, "COUNT THE STEPS!");
                 mReporter.start();
             }
         }
@@ -141,7 +139,7 @@ public class Shealth extends CordovaPlugin {
     
     private void showPermissionAlarmDialog() {
     	globalCallbackContext.error("All permissions should be acquired");
-//        AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.mInstance);
+//        AlertDialog.Builder alert = new AlertDialog.Builder(cordova.getActivity().mInstance);
 //        alert.setTitle("Notice");
 //        alert.setMessage("All permissions should be acquired");
 //        alert.setPositiveButton("OK", null);
@@ -150,7 +148,7 @@ public class Shealth extends CordovaPlugin {
 
     private void showConnectionFailureDialog(HealthConnectionErrorResult error) {
 
-        //AlertDialog.Builder alert = new AlertDialog.Builder(MainActivity.mInstance);
+        //AlertDialog.Builder alert = new AlertDialog.Builder(cordova.getActivity().mInstance);
         mConnError = error;
         String message = "Connection with S Health is not available";
 
@@ -181,7 +179,7 @@ public class Shealth extends CordovaPlugin {
 //            @Override
 //            public void onClick(DialogInterface dialog, int id) {
 //                if (mConnError.hasResolution()) {
-//                    mConnError.resolve(MainActivity.mInstance);
+//                    mConnError.resolve(cordova.getActivity().mInstance);
 //                }
 //            }
 //        });
@@ -195,17 +193,17 @@ public class Shealth extends CordovaPlugin {
 
     
     private void steps() {
-    	Log.d(MainActivity.APP_TAG, "steps");
+    	Log.d(cordova.getActivity().APP_TAG, "steps");
     	mReporter.start();
     }
 
     private void stepsSHealth(String startDate, String endDate) {
-        Log.d(MainActivity.APP_TAG, "steps");
+        Log.d(cordova.getActivity().APP_TAG, "steps");
         mReporter.startReadStepCount(startDate, endDate);
      }
 
     public void drawStepCount(JSONArray count){
-    	Log.d(MainActivity.APP_TAG, "drawStepCount: " + count);
+    	Log.d(cordova.getActivity().APP_TAG, "drawStepCount: " + count);
     	globalCallbackContext.success(count);
     }
 
