@@ -41,7 +41,10 @@ public class Shealth extends CordovaPlugin {
     @Override
     public boolean execute(String action, JSONArray args, CallbackContext callbackContext) throws JSONException {
         if (action.equals("steps")) {
-            // this.steps();
+            this.steps();
+            globalCallbackContext = callbackContext;
+            return true;
+        } else if (action.equals("stepsSHealth")) {
             String startDate = args.getJSONObject(0).getString("startDate");
             String endDate   = args.getJSONObject(0).getString("endDate");
 
@@ -49,7 +52,7 @@ public class Shealth extends CordovaPlugin {
 
             globalCallbackContext = callbackContext;
             return true;
-        }else if(action.equals("connect")){
+        } else if(action.equals("connect")){
             this.connect();
             globalCallbackContext = callbackContext;
             return true;
@@ -199,9 +202,9 @@ public class Shealth extends CordovaPlugin {
     }
 
     private void stepsSHealth(String startDate, String endDate) {
-        Log.d(LOG_TAG, "steps");
+        Log.d(LOG_TAG, "stepsSHealth");
         mReporter.startReadStepCount(startDate, endDate);
-     }
+ }
 
     public void drawStepCount(JSONArray count){
     	Log.d(LOG_TAG, "drawStepCount: " + count);

@@ -47,7 +47,7 @@ public class StepCountReporter {
 
         // Set time range from start time of today to the current time
         long startTime = setToMiliseconds(startDate);
-        long endTime = setToMiliseconds(endDate);
+        long endTime = setToMiliseconds(endDate) +  ( 2 * 24 * 60 * 60 * 1000 );
         Filter filter = Filter.and(Filter.greaterThanEquals(HealthConstants.StepCount.START_TIME, startTime),
                 Filter.lessThanEquals(HealthConstants.StepCount.START_TIME, endTime));
 
