@@ -7,6 +7,7 @@ import com.samsung.android.sdk.healthdata.HealthDataResolver.Filter;
 import com.samsung.android.sdk.healthdata.HealthDataResolver.ReadRequest;
 import com.samsung.android.sdk.healthdata.HealthDataResolver.ReadResult;
 import com.samsung.android.sdk.healthdata.HealthDataStore;
+import com.samsung.android.sdk.healthdata.HealthDevice;
 import com.samsung.android.sdk.healthdata.HealthResultHolder;
 import com.samsung.android.sdk.healthdata.HealthDeviceManager;
 
@@ -134,6 +135,8 @@ public class StepCountReporter {
                     String deviceName = "";
                     String deviceManufacturer = "";
                     String deviceModel = "";
+                    String groupName;
+                    Integer deviceGroup;
                     byte[] dataText = null;
 
                     while (c.moveToNext()) {
@@ -141,6 +144,7 @@ public class StepCountReporter {
                         deviceName = deviceManager.getDeviceByUuid(c.getString(c.getColumnIndex(HealthConstants.StepCount.DEVICE_UUID))).getCustomName();
                         deviceManufacturer = deviceManager.getDeviceByUuid(c.getString(c.getColumnIndex(HealthConstants.StepCount.DEVICE_UUID))).getManufacturer();
                         deviceModel = deviceManager.getDeviceByUuid(c.getString(c.getColumnIndex(HealthConstants.StepCount.DEVICE_UUID))).getModel();
+                        deviceGroup = deviceManager.getDeviceByUuid(c.getString(c.getColumnIndex(HealthConstants.StepCount.DEVICE_UUID))).getGroup();
 
                         if (deviceName == null) {
                             deviceName = "";
@@ -153,13 +157,28 @@ public class StepCountReporter {
                         if (deviceModel == null) {
                             deviceModel = "";
                         }
+                        switch(deviceGroup){
+                            case HealthDevice.GROUP_MOBILE:
+                                groupName = "mobileDevice";
+                                break;
+                            case HealthDevice.GROUP_EXTERNAL:
+                                groupName = "peripheral";
+                                break;
+                            case HealthDevice.GROUP_COMPANION:
+                                groupName = "wereable";
+                                break;
+                            case HealthDevice.GROUP_UNKNOWN;
+                                groupName = "unknown";
+                                break;
+                        }
 
                         resultSet += "{ offset: " +
                                 c.getString(c.getColumnIndex(HealthConstants.StepCount.TIME_OFFSET)) + ", start:" +
                                 c.getString(c.getColumnIndex(HealthConstants.StepCount.START_TIME)) + ", end:" +
                                 c.getString(c.getColumnIndex(HealthConstants.StepCount.END_TIME)) + ", step:" +
                                 c.getInt(c.getColumnIndex(HealthConstants.StepCount.COUNT)) + ", deviceName:\"" +
-                                deviceName + "\", deviceManufacturer:\"" + deviceManufacturer + "\", deviceModel:\"" + deviceModel + "\"}, ";
+                                deviceName + "\", deviceManufacturer:\"" + deviceManufacturer + "\", deviceModel:\"" +
+                                deviceModel + "\", deviceGroup: \""+ groupName + "\" }, ";
                     }
 
                 } else {
