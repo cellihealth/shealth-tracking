@@ -135,7 +135,7 @@ public class StepCountReporter {
                     String deviceName = "";
                     String deviceManufacturer = "";
                     String deviceModel = "";
-                    String groupName;
+                    String groupName="";
                     Integer deviceGroup;
                     byte[] dataText = null;
 
@@ -167,7 +167,7 @@ public class StepCountReporter {
                             case HealthDevice.GROUP_COMPANION:
                                 groupName = "wereable";
                                 break;
-                            case HealthDevice.GROUP_UNKNOWN;
+                            case HealthDevice.GROUP_UNKNOWN:
                                 groupName = "unknown";
                                 break;
                         }
