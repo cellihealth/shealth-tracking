@@ -165,7 +165,7 @@ public class StepCountReporter {
                                 groupName = "peripheral";
                                 break;
                             case HealthDevice.GROUP_COMPANION:
-                                groupName = "wereable";
+                                groupName = "wearable";
                                 break;
                             case HealthDevice.GROUP_UNKNOWN:
                                 groupName = "unknown";
